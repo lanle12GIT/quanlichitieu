@@ -5,26 +5,24 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Orders from './pages/orders.tsx';
+// import CreateOrder from './Orders/createOrder.tsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: < App/>,
-    // children: [
-    //   {
-    //     index: true,
-    //     element: <Home />,
-    //   },
-    //   {
-    //     path: "about",
-    //     element: <About />,
-    //   },
-    // ],
+    element: < App />,
   },
   {
-    path: "/order",
-    element: <div>đơn hàng của bạn</div>,
-  },
+    path: "/orders",
+    element: <Orders />,
+    // children: [
+    //   {
+    //     path: "/createOrders",
+    //     element: <CreateOrder/>
+    //   },
+    // ]
+    },
   {
     path: "/spend",
     element: <div>Chi tiêu của bạn</div>,
