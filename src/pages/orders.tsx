@@ -46,6 +46,7 @@ const Orders = () => {
 
   // Omit là loại bỏ các thuộc tính trong kiểu dữ liệu
   const handleAddOrder = (newOrderData: Omit<DataType, 'key'>) => {
+    
     console.log("check ", newOrderData);
     const newData: DataType = {
       key: (data.length + 1).toString(), // Tạo key mới cho đơn hàng
