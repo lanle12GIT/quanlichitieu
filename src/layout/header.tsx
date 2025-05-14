@@ -17,7 +17,7 @@ const Header = () => {
   };
   const items: MenuItem[] = [
     {
-      label:<Link to="/">Home</Link>,
+      label: <Link to="/">Home</Link>,
       key: 'home',
       icon: <HomeOutlined />,
     },
@@ -29,16 +29,16 @@ const Header = () => {
     {
       label: <Link to="/spending">Chi tiêu</Link>,
       key: 'spend',
-      icon:<WalletOutlined />,
+      icon: <WalletOutlined />,
 
     },
     {
-      label:<Link to="/statistics">Thống Kê</Link>,
+      label: <Link to="/statistics">Thống Kê</Link>,
       key: 'statistic',
       icon: <BarChartOutlined />,
     },
     {
-      label: <Link to="/login">Đăng Nhập</Link>, 
+      label: <Link to="/login">Đăng Nhập</Link>,
       key: 'login',
       icon: <LoginOutlined />,
 
@@ -46,10 +46,10 @@ const Header = () => {
   ];
 
   return (
-    <Menu 
-    onClick={onClick} 
-    selectedKeys={[current]}
-     mode="horizontal" items={items} />
+    <Menu
+      onClick={onClick}
+      selectedKeys={[current]}
+      mode="horizontal" items={items} />
   )
 
 }

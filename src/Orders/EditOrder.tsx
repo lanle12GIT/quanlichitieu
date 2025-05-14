@@ -4,19 +4,21 @@ import type { FormProps } from 'antd';
 import { Button, Form, Input, Select } from 'antd';
 import { Order, OrderStatus } from '../models/Order';
 
-type CreateOrderProps = {
-    isCreateOrder: boolean;
-    setIsCreateOrder: React.Dispatch<React.SetStateAction<boolean>>;
+type EditOrderProps = {
+    isEditOrder: boolean;
+    editOrderData: Order;
+    setIsEditOrder: React.Dispatch<React.SetStateAction<boolean>>;
     onSendData?: (data: Order) => void;
 
 };
 
-const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrder, onSendData }) => {
+const EditOrder: React.FC<EditOrderProps> = ({ isEditOrder, editOrderData, setIsEditOrder, onSendData }) => {
     const [form] = Form.useForm(); // Hook để reset form
 
     const onFinish: FormProps<Order>['onFinish'] = (values) => {
 
         const data: Order = {
+            id: editOrderData.id,
             name: values.name,
             phone: values.phone,
             address: values.address,
@@ -31,18 +33,18 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrd
         }
 
         form.resetFields(); // Reset form sau khi gửi dữ liệu
-        setIsCreateOrder(false); // Đóng form sau khi gửi dữ liệu
+        setIsEditOrder(false); // Đóng form sau khi gửi dữ liệu
     };
 
     const handleCancel = () => {
-        setIsCreateOrder(false);
+        setIsEditOrder(false);
         form.resetFields(); // Reset form khi hủy
     }
 
     return (<>
-        {isCreateOrder &&
+        {isEditOrder &&
             <>
-                <h1 style={{ marginLeft: "100px", marginBlock: "30px" }}> Thêm đơn hàng</h1>
+                <h1 style={{ marginLeft: "100px", marginBlock: "30px" }}> Sửa đơn hàng</h1>
                 <Form
                     form={form}
                     name="basic"
@@ -57,6 +59,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrd
                     <Form.Item<Order>
                         label="Name"
                         name="name"
+                        initialValue={editOrderData.name} // Set giá trị mặc định từ editOrderData
                         rules={[{ required: true, message: 'Please input your customerName!' }]}
                     >
                         <Input />
@@ -65,6 +68,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrd
                     <Form.Item<Order>
                         label="Phone Number"
                         name="phone"
+                        initialValue={editOrderData.phone} // Set giá trị mặc định từ editOrderData
                         rules={[{ required: true, message: 'Please input your customerPhone !' },
                         {
                             pattern: /^[0-9]+$/, // Chỉ cho phép các chữ số từ 0-9
@@ -78,6 +82,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrd
                     <Form.Item<Order>
                         label="Address"
                         name="address"
+                        initialValue={editOrderData.address} // Set giá trị mặc định từ editOrderData
                         rules={[{ required: true, message: 'Please input your customerAddress!' }]}
                     >
                         <Input />
@@ -86,6 +91,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrd
                     <Form.Item<Order>
                         label="&nbsp;&nbsp;Money"
                         name="money"
+                        initialValue={editOrderData.money} // Set giá trị mặc định từ editOrderData
                         rules={[{
                             pattern: /^[0-9]+$/, // Chỉ cho phép các chữ số từ 0-9
                             message: 'Money must contain only digits!'
@@ -100,17 +106,17 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrd
                     <Form.Item<Order>
                         label="&nbsp;&nbsp;Note"
                         name="note"
-
+                        initialValue={editOrderData.note} // Set giá trị mặc định từ editOrderData
                     >
                         <Input />
                     </Form.Item>
-                    
+
                     <Form.Item<Order>
                         label="&nbsp;&nbsp;Status"
                         name="status"
                     >
                         <Select
-                            defaultValue=""
+                            defaultValue={editOrderData.status}
                             style={{ width: 120 }}
                             options={[
                                 { value: OrderStatus.DAT_HANG, label: 'DAT_HANG' },
@@ -122,9 +128,11 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrd
                             />
                     </Form.Item>
 
+                    
+
                     <Form.Item label={null}>
                         <Button type="primary" htmlType="submit">
-                            Submit
+                            Edit
                         </Button>
 
                         <Button style={{ marginLeft: "5px" }} onClick={handleCancel}>Cancel </Button>
@@ -136,4 +144,4 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrd
 
     </>)
 }
-export default CreateOrder
+export default EditOrder
