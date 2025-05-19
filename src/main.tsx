@@ -12,26 +12,27 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: < App />,
+    children: [
+      {
+        path: "/orders",
+        element: <Orders />,
+        // children: [
+        //   {
+        //     path: "/createOrders",
+        //     element: <CreateOrder/>
+        //   },
+        // ]
+      },
+      {
+        path: "/spend",
+        element: <div>Chi tiêu của bạn</div>,
+      },
+      {
+        path: "/statistic",
+        element: <div>thống kê</div>,
+      },
+    ]
   },
-  {
-    path: "/orders",
-    element: <Orders />,
-    // children: [
-    //   {
-    //     path: "/createOrders",
-    //     element: <CreateOrder/>
-    //   },
-    // ]
-    },
-  {
-    path: "/spend",
-    element: <div>Chi tiêu của bạn</div>,
-  },
-  {
-    path: "/statistic",
-    element: <div>thống kê</div>,
-  },
-
 ]);
 
 

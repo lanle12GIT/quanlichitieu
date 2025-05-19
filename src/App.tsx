@@ -1,19 +1,13 @@
+import { Outlet } from "react-router-dom";
 import Header from "./layout/header";
+import Notifications from "./component/EventSource";
 
 const App = () => {
   return (
     <>
       <Header />
-      <h1
-        style={{
-          color: "red",
-          textAlign: "center",
-          marginTop: "50px",
-          fontSize: "50px",
-        }}
-      >
-        QUẢN LÍ THU CHI
-      </h1>
+      <Notifications/>
+      <Outlet />
     </>
   );
 };
