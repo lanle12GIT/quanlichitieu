@@ -1,43 +1,43 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App.tsx';
 import {
   createBrowserRouter,
   RouterProvider,
-} from "react-router-dom";
+} from 'react-router-dom';
 import Orders from './pages/orders.tsx';
-// import CreateOrder from './Orders/createOrder.tsx';
+import { Provider } from 'react-redux';
+import { store } from './app/store';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: < App />,
+    path: '/',
+    element: <App />,
     children: [
       {
-        path: "/orders",
+        path: '/orders',
         element: <Orders />,
-        // children: [
-        //   {
-        //     path: "/createOrders",
-        //     element: <CreateOrder/>
-        //   },
-        // ]
       },
       {
-        path: "/spend",
+        path: '/spending',
         element: <div>Chi tiêu của bạn</div>,
       },
       {
-        path: "/statistic",
-        element: <div>thống kê</div>,
+        path: '/statistics',
+        element: <div>Thống kê</div>,
       },
-    ]
+    ],
+  },
+  {
+    path: '/login',
+    element: <div>Đăng nhập admin</div>,
   },
 ]);
 
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-)
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </StrictMode>
+);

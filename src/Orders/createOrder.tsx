@@ -8,7 +8,6 @@ type CreateOrderProps = {
     isCreateOrder: boolean;
     setIsCreateOrder: React.Dispatch<React.SetStateAction<boolean>>;
     onSendData?: (data: Order) => void;
-
 };
 
 const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrder, onSendData }) => {
@@ -38,6 +37,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrd
         setIsCreateOrder(false);
         form.resetFields(); // Reset form khi hủy
     }
+
 
     return (<>
         {isCreateOrder &&
@@ -131,6 +131,8 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ isCreateOrder, setIsCreateOrd
                     </Form.Item>
 
                 </Form>
+                {/* <span style={{ fontSize: "12px", color: "#888" }}>{messages}</span> */}
+
             </>
         }
 

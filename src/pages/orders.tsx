@@ -3,15 +3,20 @@ import { Button, Space, Table } from 'antd';
 import type { TableProps } from 'antd';
 import CreateOrder from '../Orders/createOrder';
 import { EditOutlined } from '@ant-design/icons';
-import { Order, OrderStatus } from '../models/Order'; // Import OrderStatus
+import { Order } from '../models/Order';
 import instance from '../utils/axios.custom';
 import EditOrder from '../Orders/EditOrder';
+import { RootState } from '../app/store';
+import { useSelector } from 'react-redux';
 
 const Orders = () => {
   const [isCreateOrder, setIsCreateOrder] = useState(false);
   const [isEditOrder, setIsEditOrder] = useState(false);
   const [editOrderData, setEditOrderData] = useState({} as Order);
   const [data, setData] = useState<Order[]>([]);
+
+  const newMessage = useSelector((state: RootState) => state.value);
+
   const fetchData = async () => {
     try {
       const response = await instance.get('api/orders');
@@ -21,9 +26,17 @@ const Orders = () => {
       console.error('Error fetching data:', error);
     }
   }
+
   useEffect(() => {
     fetchData();
-  }, [])
+  }, []);
+  // Gọi lại fetchData khi có message mới
+  useEffect(() => {
+    if (newMessage) {
+      console.log("Message mới từ store:", newMessage);
+      fetchData();
+    }
+  }, [newMessage]); // 👈 phụ thuộc vào message
 
   const handleAddOrder = (newOrderData: Order) => {
     newOrderData.id = (data.length + 1).toString();
@@ -104,37 +117,24 @@ const Orders = () => {
       dataIndex: 'status',
       key: 'status',
       render: (text, record) => {
-        let color = 'red'; // Default color
-        switch (record.status) {
-          case OrderStatus.DAT_HANG:
-            color = 'blue';
-            break;
-          case OrderStatus.HUY:
-            color = 'gray';
-            break;
-          case OrderStatus.DA_THANH_TOAN:
-            color = 'purple';
-            break;
-          case OrderStatus.DANG_GIAO:
-            color = 'orange';
-            break;
-          case OrderStatus.DA_GIAO:
-            color = 'teal';
-            break;
-          default:
-            color = 'red';
-        }
         return (
-            <span style={{ color }}>
+          <span style={{
+            color:
+              record.status === "DAT HANG" ? "blue" :
+                record.status === "HUY" ? "gray" :
+                  record.status === "DA THANH TOAN" ? "purple" :
+                    record.status === "DANG GIAO" ? "orange" :
+                      record.status === "DA GIAO" ? "teal" : "red"
+          }}>
             {record.status}
-            </span>
+          </span>
         )
       }
     },
     {
-      title: 'Created At',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      title: 'Time',
+      dataIndex: 'time',
+      key: 'time',
     },
 
     {
@@ -147,6 +147,7 @@ const Orders = () => {
       ),
     },
   ];
+
 
 
 
@@ -171,13 +172,13 @@ const Orders = () => {
         )
       }
       {
-        isCreateOrder && 
-          <CreateOrder
-            isCreateOrder={isCreateOrder}
-            setIsCreateOrder={setIsCreateOrder}
-            // truyền hàm handleAddOrder từ component cha xuống component con
-            onSendData={handleAddOrder}
-          />
+        isCreateOrder &&
+        <CreateOrder
+          isCreateOrder={isCreateOrder}
+          setIsCreateOrder={setIsCreateOrder}
+          // truyền hàm handleAddOrder từ component cha xuống component con
+          onSendData={handleAddOrder}
+        />
       }
 
       {isEditOrder && (
